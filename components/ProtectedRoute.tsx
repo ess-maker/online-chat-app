@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }:{ children:any }) => {
     const router = useRouter();
     const { user } = UserAuth();
 
-    if (!user) {
+    if (user) {
         router.push('/')
     }
   return children

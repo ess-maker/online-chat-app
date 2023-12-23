@@ -2,6 +2,7 @@
 
 import { ChangeEvent, FC } from 'react'
 import Image from 'next/image'
+import { MdErrorOutline } from 'react-icons/md'
 
 type InputProps =  {
   name: string
@@ -9,44 +10,25 @@ type InputProps =  {
   label?: string
   value?: string | number
   placeholder: string
-  error: boolean
+  error?: string
   disabled?: boolean
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  starter_icon:string
-  end_icon:string
-
 }
 
-const Inputfiled:FC<InputProps> = ({error ,end_icon , starter_icon , label , name , onChange , placeholder , type , disabled , value}
+const Inputfiled:FC<InputProps> = ({error  , label , name , onChange , placeholder , type , disabled , value}
   :InputProps) => {
     return (
-    <div role='input' className="w-full">
-    <label htmlFor={name} className="mb-2 px-[18.75rem] text-sm font-medium text-primary_700 sr-only dark:text-white">{label}</label>
-    <div className="relative">
-        {starter_icon && <div className="absolute inset-y-0 start-0 top-1/2 transform -translate-y-1/2 flex items-center ps-3 pointer-events-none">
-        <Image
-src={starter_icon}
-width={21}
-height={21}
-alt="starter_icon"
-/>
-        </div>}
-        <input
-         type={type} 
-         id={name}
-         onChange={() => onChange}
-          className={`rounded-full py-2 pr-6 pl-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in`}
-          placeholder={placeholder} required />
-        {end_icon && <div className="absolute end-2.5  top-1/2 transform -translate-y-1/2 pointer-events-none">
-        <Image
-src={end_icon}
-width={21}
-height={21}
-alt="User Icon"
-className=''
-/>
-        </div>}
-    </div>
+      <div className="w-full mb-4" >
+      <label htmlFor={name} className="block mb-2  text-base font-medium text-[#07074D]">{label}</label>
+      <input onChange={onChange} type={type} name={name} placeholder={placeholder} value={value} 
+      className={`w-full rounded-md border  bg-white py-3 px-6 text-base font-medium
+       text-[#6B7280] outline-none focus:shadow-md ${error ? 'border-red-600 focus:border-red-600' : 'border-[#e0e0e0] focus:border-[#6A64F1]'}`} />
+        {error && error && (
+        <span className={`text-red-500 font-medium flex items-center gap-2 tracking-wide text-sm mt-2 ml-1`}>
+          <MdErrorOutline color={'#ff5555'} size={20} />
+          {error as string}
+        </span>
+      )}
     </div>
     )
 }
